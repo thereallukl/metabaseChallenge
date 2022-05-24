@@ -49,6 +49,7 @@ class WholeTableBackup:
         for c in columns_iter:
             wtb_dto.columns.append(c)
 
+    # evaluate using cursor.copy()
     def _get_whole_table(self, table_name, wtb_dto):
         connection = DBConnection.get_connection()
         cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
