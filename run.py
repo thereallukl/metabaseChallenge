@@ -5,8 +5,8 @@ from app.main.api.pagila import pagila_api
 from app.main.config import Configuration
 
 app = Flask(__name__)
+Configuration.load()
 config = Configuration()
-config.load()
 
 if __name__ == '__main__':
     app.register_blueprint(pagila_api, url_prefix='/api')

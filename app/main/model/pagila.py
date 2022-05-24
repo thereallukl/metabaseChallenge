@@ -16,12 +16,13 @@ class TableList:
 
     def _get_table_list(self, tl_dto):
         connection = DBConnection.get_connection()
-        cursor = connection.cursor("get_table_list")
+        cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cursor.execute("SELECT table_name FROM information_schema.tables where table_schema='public'")
         results = cursor.fetchall()
         cursor.close()
         DBConnection.release_connection(connection)
         for r in results:
+            print(r[0])
             tl_dto.tables.append(r[0])
 
 

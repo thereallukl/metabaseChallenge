@@ -11,7 +11,7 @@ def show_tables():  # put application's code here
         t = pagila_service.get_tables()
         return {'tables': t.tables}, 200
     except Exception as e:
-        return {'error': e}, 500
+        return {'error': str(e)}, 500
 
 
 @pagila_api.route('/backup-table', methods=["POST"])
@@ -21,7 +21,7 @@ def backup_table():  # put application's code here
         b = pagila_service.backup_whole_table(data["table_name"])
         return {}, 200
     except Exception as e:
-        abort(500, e)
+        return {'error': str(e)}, 500
 
 
 @pagila_api.route('/_healthz', methods=["GET"])
