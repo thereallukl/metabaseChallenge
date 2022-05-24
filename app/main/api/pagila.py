@@ -22,3 +22,8 @@ def backup_table():  # put application's code here
         return {}, 200
     except Exception as e:
         abort(500, e)
+
+
+@pagila_api.route('/_healthz', methods=["GET"])
+def healthcheck():
+    return {}, 200

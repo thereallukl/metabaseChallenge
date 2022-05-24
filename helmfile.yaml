@@ -22,9 +22,8 @@ releases:
 - name: challenge-api
   namespace: challenge
   chart: ./deploy/api-challenge
-- name: registry
-  namespace: registry
-  chart: bitnami/harbor
   set:
-    - name: adminPassword
-      value: password
+    - name: image.repository
+      value: lukl/metabase-challenge
+    - name: image.tag
+      value: master
