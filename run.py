@@ -11,4 +11,4 @@ config.load()
 if __name__ == '__main__':
     app.register_blueprint(pagila_api, url_prefix='/api')
     app.register_error_handler(500, handle_bad_request)
-    app.run()
+    app.run(host='0.0.0.0')
