@@ -9,3 +9,4 @@ data-seed/
 README.md
 .dockerignore
 Dockerfile
+.github/
