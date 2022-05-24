@@ -57,4 +57,4 @@ class WholeTableBackup:
         cursor.close
         DBConnection.release_connection(connection)
         for r in records_iter:
-            wtb_dto.records.append(map(lambda x: str(x), r))
+            wtb_dto.records.append([str(x) for x in r])
