@@ -1,11 +1,14 @@
 from flask import Blueprint, request, abort
+from .utils import auth
 
 from app.main.service.pagila import PagilaService
 
 pagila_api = Blueprint('api', __name__)
 pagila_service = PagilaService()
 
+
 @pagila_api.route('/show-tables')
+@auth.login_required
 def show_tables():  # put application's code here
     try:
         t = pagila_service.get_tables()

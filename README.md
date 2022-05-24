@@ -7,6 +7,7 @@
 1. Prepare kubernetes cluster
 2. Login to your cluster and set it as current context
 3. Run deployment script ./deploy.sh
+4. Api is protected with basic auth, with username == `api` and default password == `SecRetPass`
 
 
 # Prepare environment on Ubuntu

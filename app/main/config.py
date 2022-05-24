@@ -9,7 +9,7 @@ class Configuration:
 
     @classmethod
     def load(cls):
-        # load based on env vars
+        # load based on env vars. variable name must match __conf key
         for key in cls.__conf.keys():
             if os.environ.get(key):
                 cls.__conf[key] = os.environ[key]
@@ -23,7 +23,8 @@ class Configuration:
         "minio_username": "admin",
         "minio_password": "password",
         "minio_server": "http://minio.challenge.svc.cluster.local:9000",
-        "minio_bucket": "backups"
+        "minio_bucket": "backups",
+        "api_auth_password": "SecRetPass"
     }
 
     def __getattr__(self, item):

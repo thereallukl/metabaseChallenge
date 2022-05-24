@@ -2,3 +2,5 @@ Flask~=2.1.2
 psycopg2
 boto3
 botocore
+Flask-HTTPAuth==4.6.0
+werkzeug

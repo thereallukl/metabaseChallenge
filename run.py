@@ -8,6 +8,7 @@ app = Flask(__name__)
 Configuration.load()
 config = Configuration()
 
+
 if __name__ == '__main__':
     app.register_blueprint(pagila_api, url_prefix='/api')
     app.register_error_handler(500, handle_bad_request)
