@@ -1,10 +1,15 @@
+from typing import Dict
+
 import psycopg2.extras
 
 from app.main.db import DBConnection
 
 
 class TableListDto:
-    tables = []
+    tables: Dict
+
+    def __init__(self):
+        self.tables = []
 
 
 class TableList:
@@ -16,19 +21,28 @@ class TableList:
 
     def _get_table_list(self, tl_dto):
         connection = DBConnection.get_connection()
-        cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
-        cursor.execute("SELECT table_name FROM information_schema.tables where table_schema='public'")
+        cursor = connection.cursor()
+        cursor.execute("""
+        select table_name, pg_relation_size('"'||table_schema||'"."'||table_name||'"')
+        from information_schema.tables
+        where table_schema = 'public'
+        order by pg_relation_size desc;
+        """
+        )
         results = cursor.fetchall()
         cursor.close()
         DBConnection.release_connection(connection)
         for r in results:
-            print(r[0])
             tl_dto.tables.append(r[0])
 
 
 class WholeTableBackupDto:
-    records = []
-    columns = []
+    records: Dict
+    columns: Dict
+
+    def __init__(self):
+        self.records = []
+        self.columns = []
 
 
 class WholeTableBackup:
@@ -45,7 +59,7 @@ class WholeTableBackup:
         # get schema
         cursor.execute("SELECT column_name, data_type FROM information_schema.columns WHERE table_schema ='public' AND table_name = '" + table_name + "'")
         columns_iter = cursor.fetchall()
-        cursor.close
+        cursor.close()
         DBConnection.release_connection(connection)
         for c in columns_iter:
             wtb_dto.columns.append(c)
@@ -56,7 +70,7 @@ class WholeTableBackup:
         cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cursor.execute("SELECT * FROM " + table_name)
         records_iter = cursor.fetchall()
-        cursor.close
+        cursor.close()
         DBConnection.release_connection(connection)
         for r in records_iter:
             wtb_dto.records.append([str(x) for x in r])
